@@ -1,55 +1,79 @@
 #bank,medical,hospital,station,shop,school,college
+from queue import PriorityQueue
 
 class NearByMe:
 
     def __init__(self):
         self.allPoints=[]
         self.allType=[]
-        self.sortType=["Rating","Distance","Rating & Distance"]
+        # self.sortType=["Rating","Distance","Rating & Distance"]
 
 
     class Point:
 
-        def __init__(self,name,x,y,disciption,type):
+        def __init__(self,name,x,y,disciption,type,personUsername):
             self.x=x
             self.y=y
             #{"Name":"xyz","star":4,"username":"abc"}
             self.reviews=[]
             self.name=name
             self.discription=disciption
-            self,type=type
+            self.type=type
+            self.personUsername=personUsername
 
     
-    def addPoint(self):
+    def addPoint(self,person):
         print()
         print("*-*->New Point Adding : ")
         name=input("Enter Name : ")
         discription=input("Enter Discription : ")
-        x=input("Enter x-Cordinate : ")
-        y=input("Enter y-Cordinate : ")
+        x=int(input("Enter x-Cordinate : "))
+        y=int(input("Enter y-Cordinate : "))
         print()
         for i in self.allType:
             print(i)
         print()
-        type=input("Choice Above Type Or New Type : ")
+        sm=input("(1)Choice Above Type (2) New Type : ")
+        if sm=="1":
+            no=int(input("Enter No Above For Type : "))
+            type=self.allType[no]
+        elif sm=="2":
+            type=input("Enter New Type : ")
+            self.allType.append(type)
 
-        self.allPoints.append(self.Point(name,x,y,discription,type))
+        self.allPoints.append(self.Point(name,x,y,discription,type,person.username))
 
-    def calculationNearPoint(self,typeNo,sortTypeNo):
+    def calculationNearPoint(self,x,y,typeNo):
         typeName=self.allType[typeNo]
-        
-        if sortTypeNo=="0":
-            pass
 
-        elif sortTypeNo=="1":
-            pass
-        
-        elif sortTypeNo=="2":
-            pass
 
-    def userInMap(self,u):
+        q=PriorityQueue()
+        ans=[]
+
+
+        listOfAvailableType=[]
+        for i in self.allPoints:
+            if i.type==typeName:
+                # listOfAvailableType.append(i)
+                dist=((i.x-x)**2)+((i.y-y)**2)
+                q.put(dist,i)
+
+        while not q.empty():
+# ...         print(q.get()[1].name)
+            ans.append(q.get())
+
+        return ans
+
+
+       
+
+    def userInMap(self,person):
         print()
+        x=int(input("Enter x-Cordinate : "))
+        y=int(input("Enter y-Cordinate : "))
         print("Near You...")
+
+        print()
         
         for i,j in  enumerate(self.allType):
             print((i+1),j)
@@ -61,17 +85,20 @@ class NearByMe:
             return
         
         print()
-        print("Choice Sorting Type")
-        for i,j in  enumerate(self.sortType):
-                print((i+1),j)
+        # print("Choice Sorting Type")
+        # for i,j in  enumerate(self.sortType):
+        #         print((i+1),j)
 
-        sortTypeNo=int(input("Enter Type Nubmer : "))
-        if sortTypeNo<1 and sortTypeNo>len(self.sortType):
-            print("Invalid Choise Try Again...")
-            return
+        # sortTypeNo=int(input("Enter Type Nubmer : "))
+        # if sortTypeNo<1 and sortTypeNo>len(self.sortType):
+        #     print("Invalid Choise Try Again...")
+        #     return
 
 
-        listOfNearByUs=self.calculationNearPoint(self.allType[typeNo-1],(sortTypeNo-1))
+
+        #Calculating Point By Sort Distance
+        listOfNearByUs=self.calculationNearPoint(x,y,typeNo-1)
+        print(listOfNearByUs)
         print()
         print("*-*->This is ")
         for i,j in enumerate(listOfNearByUs):
@@ -86,9 +113,21 @@ class NearByMe:
         
         elif int(choice)>0 and int(choice)<len(listOfNearByUs):
             p=listOfNearByUs[int(choice)-1]
+            print()
+            print()
+            star=int(input("Enter Integer 0-5 Start : "))
+            # {"Name":"xyz","star":4,"username":"abc"}
+            if star>0 and star<5:
+                p.reviews.append({"Name":person.name,"star":star,"username":person.username})
+            else:
+                print("Invalid Star Choice Try Again...")
+
+            
         
         else:
             print("Invalid Option Try Again...")
 
+
+    
 
 
