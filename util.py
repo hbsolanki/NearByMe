@@ -3,7 +3,7 @@ def checkMobileNumber(number):
     numberch = str(number)
     if len(numberch) == 10 and numberch.isdigit():
         if numberch[0] in ["6", "7", "8", "9"]:
-            False
+            return True
         else:
             return False
     else:
