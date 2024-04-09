@@ -63,7 +63,6 @@ class NearByMe:
                 q.put((dist,i))
 
         while not q.empty():
-# ...         print(q.get()[1].name)
             a=q.get()
             ans.append(a[1])
 

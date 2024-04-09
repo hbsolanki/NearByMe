@@ -24,7 +24,6 @@ class Main:
         # ,name,x,y,disciption,type,personUsername
         allPoint=CURD.getPointFromDB()
         for i in allPoint:
-            print(i)
             p=self.nearByMe.Point(i["name"],i["x"],i["y"],i["discription"],i["type"],i["personUsername"])
             if i["reviews"] :
                 p.reviews=i["reviews"]
