@@ -23,11 +23,6 @@ def checkPassWord(password):
     else:
         return False
 
-
-        
-
-
-
 def encodingPassWord(password):
     encoded_password = ""
     for char in password:
